@@ -13,12 +13,10 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
   const [input, setInput] = useState('')
 
   async function onSearch() {
-    if (input === '') return 
+    // if (input === '') return 
 
     const searchParams = {
-      name: input.toLowerCase(),
-      limit: 5,
-      after: ''
+      query: input.toLowerCase(),
     }
 
     await handleSearch(searchParams)
@@ -32,14 +30,10 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
   }
 
   useEffect(() => {
-    const queryParams = params.get('name') || ''
-    const limit = params.get('limit') || 5
-    const afterData = params.get('after') || ''
+    const queryParams = params.get('query') || ''
 
     const searchParams = {
-      name: queryParams.toLowerCase(),
-      limit: Number(limit),
-      after: afterData
+      query: queryParams.toLowerCase(),
     }
 
     if (queryParams) {
@@ -54,7 +48,7 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
       <div className="flex flex-col max-w-md mx-auto">
         <div className="relative w-full">
           <input
-            className="block w-full px-4 py-2.5 text-sm font-semibold text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:outline-gray-400"
+            className="block w-full px-4 py-2.5 text-sm font-semibold text-gray-900 border border-gray-400 rounded-full bg-gray-50 focus:outline-gray-400"
             type="text"
             placeholder={placeholder}
             value={input}

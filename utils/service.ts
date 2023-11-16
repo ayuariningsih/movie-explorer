@@ -43,3 +43,13 @@ export async function fetchGenres() {
     console.log(error)
   }
 }
+
+export async function searchMovies(page:number = 1, query:string) {
+  try {
+    const { data } = await axios.get(`${URL}search/movie?query=${query}&language=en-US&page=${page}&api_key=${API_KEY}`)
+
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}

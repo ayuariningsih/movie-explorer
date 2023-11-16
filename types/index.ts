@@ -7,9 +7,7 @@ export interface SearchBarProps {
 }
 
 export interface Params {
-  name: string
-  limit: number
-  after: string
+  query: string
 }
 
 export interface CustomButtonProps {

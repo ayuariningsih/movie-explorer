@@ -1,8 +1,8 @@
 "use client"
 
-import { List, Loading, SearchBar } from "@/components";
+import { DefaultList, Loading, SearchBar, SearchList } from "@/components";
 import { MovieList, MoviesResult, FetchTypes } from "@/types";
-import { fetchGenres, fetchMovies, fetchlanguages } from "@/utils";
+import { fetchGenres, fetchMovies, fetchlanguages, searchMovies } from "@/utils";
 import { createContext, useEffect, useState } from "react";
 
 export const MovieContext = createContext<MovieList>(
@@ -43,8 +43,20 @@ export default function Home() {
   const [topRatedMovies, setTopRatedMovies] = useState<MoviesResult[]>(initialMovies)
   const [nowPlayingMovies, setNowPlayingMovies] = useState<MoviesResult[]>(initialMovies)
 
-  function onSearch (searchParams: any) {
-    // handle search
+  // handle search
+  const [params, setParams] = useState({ query: ''})
+  const [searchResults, setSearchResults] = useState<MoviesResult[]>(initialMovies)
+
+  async function onSearch (searchParams: any) {
+    setLoading(true)
+
+    const { query } = searchParams
+    setParams(searchParams)
+
+    const { results } = await searchMovies(1, query)
+    await setSearchResults(results)
+    
+    setLoading(false)
   }
 
   async function getAllLanguages() {
@@ -98,10 +110,14 @@ export default function Home() {
       <h1 className="text-2xl font-extrabold py-5">Movie Explorer</h1>
       <SearchBar placeholder="Search" handleSearch={(val) => onSearch(val)} />
       <MovieContext.Provider value={{ upcomingMovies, topRatedMovies, popularMovies, nowPlayingMovies, languages, genres }}>
-        { !loading 
-          ? ( <List /> )
-          : ( <Loading /> )
+        { !loading && !params.query
+          ? ( <DefaultList /> )
+          : ( <SearchList movies={searchResults} /> )
         }
+
+        { loading && (
+          <Loading />
+        )}
       </MovieContext.Provider>
     </main>
   )

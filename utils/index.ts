@@ -1,6 +1,6 @@
 import { FetchTypes } from "@/types";
 import { findGenresByIds, getLanguage, getYear } from "./formatter";
-import { fetchGenres, fetchMovies, fetchlanguages, updateSearchParams } from "./service";
+import { fetchGenres, fetchMovies, fetchlanguages, searchMovies, updateSearchParams } from "./service";
 
 export {
   fetchMovies,
@@ -10,5 +10,6 @@ export {
   getYear,
   fetchGenres,
   findGenresByIds,
-  FetchTypes
+  FetchTypes,
+  searchMovies
 }

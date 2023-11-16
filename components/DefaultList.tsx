@@ -13,7 +13,7 @@ const List = () => {
 
   let categories = {
     Popular: popularMovies,
-    "Now Playing": nowPlayingMovies,
+    // "Now Playing": nowPlayingMovies,
     "Top Rated" : topRatedMovies,
     Upcoming: upcomingMovies,
   }
