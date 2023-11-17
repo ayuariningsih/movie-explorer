@@ -5,9 +5,9 @@ export interface SearchBarProps {
   placeholder?: string
   handleSearch: (input:Params) => void
 }
-
 export interface Params {
-  query: string
+  query?: string
+  movie_type?: string
 }
 
 export interface CustomButtonProps {
@@ -17,6 +17,7 @@ export interface CustomButtonProps {
   btnType?: 'button' | 'submit'
   textStyles?: string
   rightIcon?: any
+  isDisable?: boolean
 }
 
 export interface CardProps {
@@ -42,10 +43,7 @@ export interface MoviesResult {
 export interface MovieList {
   languages: Language[]
   genres: Genre[]
-  upcomingMovies: MoviesResult[]
-  topRatedMovies: MoviesResult[]
-  popularMovies: MoviesResult[]
-  nowPlayingMovies: MoviesResult[]
+  allMovies: MoviesResult[]
 }
 
 export interface Language {

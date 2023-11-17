@@ -20,7 +20,7 @@ const Card = ({ movie }: CardProps) => {
     return data || []
   }
 
-  const imageUrl = movie.backdrop_path ? `https://image.tmdb.org/t/p/w300_and_h300_bestv2${movie.backdrop_path}` : "/no-image.png"
+  const imageUrl = movie.backdrop_path ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}` : "/no-image.png"
 
   return (
     <div

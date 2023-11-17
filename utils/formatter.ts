@@ -1,7 +1,6 @@
 import { Genre, Language } from "@/types"
 
 export const getLanguage = (iso: string = 'en', languages: Language[]) => {
-  console.log('lang', languages)
   const filteredData = languages.find((item) => item.iso_639_1 === iso)
 
   return filteredData?.name || filteredData?.english_name

@@ -9,6 +9,7 @@ import { updateSearchParams } from "@/utils"
 const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
   const router = useRouter()
   const params = useSearchParams()
+  const queryParams = params.get('query') || ''
 
   const [input, setInput] = useState('')
 
@@ -30,19 +31,14 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
   }
 
   useEffect(() => {
-    const queryParams = params.get('query') || ''
-
     const searchParams = {
       query: queryParams.toLowerCase(),
     }
 
-    if (queryParams) {
-      handleSearch(searchParams)
-      setInput(queryParams)
-    }
-  }, [])
+    setInput(queryParams)
+    handleSearch(searchParams)
+  }, [queryParams])
   
-
   return (
     <>
       <div className="flex flex-col max-w-md mx-auto">

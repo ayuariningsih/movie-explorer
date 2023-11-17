@@ -1,19 +1,17 @@
 "use client"
 
 import Link from 'next/link';
-import { DefaultList, Loading, SearchBar, SearchList } from "@/components";
+import { CustomButton, DefaultList, Loading, SearchBar, SearchList } from "@/components";
 import { MovieList, MoviesResult, FetchTypes } from "@/types";
 import { fetchGenres, fetchMovies, fetchlanguages, searchMovies } from "@/utils";
 import { createContext, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export const MovieContext = createContext<MovieList>(
   { 
-    upcomingMovies: [], 
-    topRatedMovies: [], 
-    popularMovies: [],
-    nowPlayingMovies: [],
     languages: [], 
     genres: [],
+    allMovies: []
   })
 
 export default function Home() {
@@ -36,26 +34,35 @@ export default function Home() {
     }
   ]
 
+  const searchParams = useSearchParams()
+  const movieType = searchParams.get('movie_type') || ''
+  const query = searchParams.get('query') || ''
+
   const [loading, setLoading] = useState(true)
   const [languages, setLanguages] = useState([])
   const [genres, setGenres] = useState([])
-  const [upcomingMovies, setUpcomingMovies] = useState<MoviesResult[]>(initialMovies)
-  const [popularMovies, setPopularMovies] = useState<MoviesResult[]>(initialMovies)
-  const [topRatedMovies, setTopRatedMovies] = useState<MoviesResult[]>(initialMovies)
-  const [nowPlayingMovies, setNowPlayingMovies] = useState<MoviesResult[]>(initialMovies)
+  const [allMovies, setAllMovies] = useState<MoviesResult[]>(initialMovies)
 
   // handle search
-  const [params, setParams] = useState({ query: ''})
+  const [params, setParams] = useState({ query: '', movie_type: 'popular'})
   const [searchResults, setSearchResults] = useState<MoviesResult[]>(initialMovies)
 
+  //handle show more
+  const [pageNumber, setPageNumber] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
+
+  //on search
   async function onSearch (searchParams: any) {
     setLoading(true)
+    setPageNumber(1)
 
     const { query } = searchParams
     setParams(searchParams)
 
-    const { results } = await searchMovies(1, query)
+    const { results, page, total_pages } = await searchMovies(pageNumber, query)
     await setSearchResults(results)
+    await setPageNumber(page)
+    await setTotalPages(total_pages)
     
     setLoading(false)
   }
@@ -70,46 +77,38 @@ export default function Home() {
     setGenres(genres)
   }
 
-  async function getUpcomingMovies () {
-    const { results, total_results, page, total_pages } = await fetchMovies(1, FetchTypes.upcoming)
-    await setUpcomingMovies(results)
-  }
-
-  async function getPopularMovies () {
-    const { results, total_results, page, total_pages } = await fetchMovies(1, FetchTypes.popular)
-    await setPopularMovies(results)
-  }
-
-  async function getTopRatedMovies () {
-    const { results, total_results, page, total_pages } = await fetchMovies(1, FetchTypes.top_rated)
-    await setTopRatedMovies(results)
-  }
-
-  async function getNowPlayingMovies () {
-    const { results, total_results, page, total_pages } = await fetchMovies(1, FetchTypes.now_playing)
-    await setNowPlayingMovies(results)
+  async function getMovies (type: string = 'popular') {
+    const { results, page, total_pages } = await fetchMovies(pageNumber, type)
+    await setAllMovies(results)
+    await setPageNumber(page)
+    await setTotalPages(total_pages)
   }
 
   async function init() {
-    setLoading(true)
-    await getUpcomingMovies()
-    await getPopularMovies()
-    await getTopRatedMovies()
-    await getNowPlayingMovies()
+    await getMovies()
     await getAllGenres()
     await getAllLanguages()
-    setLoading(false)
   }
 
   useEffect(() => {
-    if (!params.query)
-      init()
+    if (!params.query) init()
+    else onSearch(params)
   }, [params.query])
+
+  useEffect(() => {
+    getMovies(movieType)
+  }, [movieType, pageNumber])
   
 
   return (
     <main className="overflow-hidden max-w-[1440px] px-8 py-5 mx-auto">
-      <Link href="/" onClick={() => setParams({...params, query: ''})}>
+      <Link
+        href={{
+          pathname: '/',
+          query: { query: '', movie_type: 'popular' },
+        }} 
+        replace
+      >
         <h1 className="text-2xl font-extrabold py-5">Movie Explorer</h1>
       </Link>
       <SearchBar placeholder="Search" handleSearch={(val) => onSearch(val)} />
@@ -117,12 +116,40 @@ export default function Home() {
       { loading 
       ? (<Loading />)
       : (
-        <MovieContext.Provider value={{ upcomingMovies, topRatedMovies, popularMovies, nowPlayingMovies, languages, genres }}>
+        <MovieContext.Provider value={{ allMovies, languages, genres }}>
           { !params.query
             ? ( <DefaultList /> )
             : ( <SearchList movies={searchResults} searchParams={params} /> )
           }
 
+          <div className="flex gap-2 justify-between mt-5">
+            { pageNumber > 1 
+            ? (
+              <CustomButton
+                title="Previous"
+                btnType="button"
+                containerStyles="bg-light-blue text-light text-sm font-bold rounded-full hover:bg-light-blue/50"
+                handleClick={() => setPageNumber(pageNumber > 1 ? pageNumber - 1 : pageNumber)} />
+              )
+            : (
+              <div className="min-w-100px"></div>
+            )}
+
+            <h6 className="text-bold">{pageNumber} / {totalPages}</h6>
+
+            { totalPages > pageNumber 
+            ? (
+                <CustomButton
+                title="Next"
+                btnType="button"
+                containerStyles="bg-light-blue text-light text-sm font-bold rounded-full hover:bg-light-blue/50"
+                handleClick={() => setPageNumber(pageNumber + 1)} />
+              )
+            : (
+              <div className="min-w-100px"></div>
+            )}
+           
+          </div>
         </MovieContext.Provider>
       )}
     </main>
