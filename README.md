@@ -1,8 +1,8 @@
-# GitHub Repository Explorer App
+# Movie Explorer App
 
 ## Description
 
-Welcome to my project! This is a GitHub Repository Explorer App made in Typescript and the NextJs 13 framework. It allows users to quickly search users and repositories. This app is integrated with Graphql Github API [Graphql Github API](https://docs.github.com/en/graphql). I prefer use graphql API instead of traditional REST API because it can make us to getting the exactly data we need and nothing more [see: Migrating from REST to GraphQL](https://docs.github.com/en/graphql/guides/migrating-from-rest-to-graphql). I hope you enjoy and I look forward to your contributions!
+Welcome to my project! This is a Movie Explorer App made in Typescript and the NextJs 13 framework. It allows users to quickly search movies. This app is integrated with MovieDB API [MovieDB API](https://developers.themoviedb.org/3/getting-started/introduction). I hope you enjoy and I look forward to your contributions!
 
 ## Getting Started
 
