@@ -5,7 +5,8 @@ import { CustomButton, DefaultList, Loading, SearchBar, SearchList } from "@/com
 import { MovieList, MoviesResult, FetchTypes } from "@/types";
 import { fetchGenres, fetchMovies, fetchlanguages, searchMovies } from "@/utils";
 import { createContext, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import Image from 'next/image'
 
 export const MovieContext = createContext<MovieList>(
   { 
@@ -108,8 +109,19 @@ export default function Home() {
           query: { query: '', movie_type: 'popular' },
         }} 
         replace
+        className="py-8"
       >
-        <h1 className="text-2xl font-extrabold py-5">Movie Explorer</h1>
+        <div className="flex flex-wrap gap-2">
+          <h1 className="text-2xl font-extrabold self-end">Movie Explorer</h1>
+          <Image
+            className=""
+            priority
+            src='/movie-icon.png'
+            width={60}
+            height={0}
+            alt="movie explorer icon"
+          />
+        </div>
       </Link>
       <SearchBar placeholder="Search" handleSearch={(val) => onSearch(val)} />
       

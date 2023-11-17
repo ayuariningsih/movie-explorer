@@ -41,7 +41,7 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
   
   return (
     <>
-      <div className="flex flex-col max-w-md mx-auto">
+      <div className="flex flex-col max-w-md mx-auto mt-8">
         <div className="relative w-full">
           <input
             className="block w-full px-4 py-2.5 text-sm font-semibold text-light border border-inverse-50 rounded-full bg-inverse-50 focus:outline-gray-400"
