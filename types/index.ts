@@ -57,10 +57,10 @@ export interface Genre {
   name: string
 }
 
-export enum FetchTypes {
-  upcoming = "upcoming",
-  top_rated = "top_rated",
-  popular = "popular",
-  now_playing = "now_playing"
+export interface PaginationProps {
+  pageNumber: number
+  totalPages: number
+  handleClickPrevious:() => void
+  handleClickNext:() => void
 }
 

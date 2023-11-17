@@ -1,20 +1,11 @@
 "use client"
 
-import Link from 'next/link';
-import { CustomButton, DefaultList, Loading, SearchBar, SearchList } from "@/components";
-import { MovieList, MoviesResult, FetchTypes } from "@/types";
+import { DefaultList, Header, Loading, Pagination, SearchBar, SearchList } from "@/components";
+import { MoviesResult } from "@/types";
 import { fetchGenres, fetchMovies, fetchlanguages, searchMovies } from "@/utils";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
-import Image from 'next/image'
 import MovieContext  from '@/context/MovieContext'
-
-// export const MovieContext = createContext<MovieList>(
-//   { 
-//     languages: [], 
-//     genres: [],
-//     allMovies: []
-//   })
 
 export default function Home() {
   const initialMovies = [
@@ -103,26 +94,7 @@ export default function Home() {
 
   return (
     <main className="overflow-hidden max-w-[1440px] px-8 py-5 mx-auto">
-      <Link
-        href={{
-          pathname: '/',
-          query: { query: '', movie_type: 'popular' },
-        }} 
-        replace
-        className="py-8"
-      >
-        <div className="flex flex-wrap gap-2">
-          <h1 className="text-2xl font-extrabold self-end">Movie Explorer</h1>
-          <Image
-            className=""
-            priority
-            src='/movie-icon.png'
-            width={60}
-            height={0}
-            alt="movie explorer icon"
-          />
-        </div>
-      </Link>
+      <Header />
       <SearchBar placeholder="Search" handleSearch={(val) => onSearch(val)} />
       
       { loading 
@@ -134,34 +106,12 @@ export default function Home() {
             : ( <SearchList movies={searchResults} searchParams={params} /> )
           }
 
-          <div className="flex gap-2 justify-between mt-5">
-            { pageNumber > 1 
-            ? (
-              <CustomButton
-                title="Previous"
-                btnType="button"
-                containerStyles="bg-light-blue text-light text-sm font-bold rounded-full hover:bg-light-blue/50"
-                handleClick={() => setPageNumber(pageNumber > 1 ? pageNumber - 1 : pageNumber)} />
-              )
-            : (
-              <div className="min-w-100px"></div>
-            )}
-
-            <h6 className="text-bold">{pageNumber} / {totalPages}</h6>
-
-            { totalPages > pageNumber 
-            ? (
-                <CustomButton
-                title="Next"
-                btnType="button"
-                containerStyles="bg-light-blue text-light text-sm font-bold rounded-full hover:bg-light-blue/50"
-                handleClick={() => setPageNumber(pageNumber + 1)} />
-              )
-            : (
-              <div className="min-w-100px"></div>
-            )}
-           
-          </div>
+          <Pagination
+            pageNumber={pageNumber}
+            totalPages={totalPages}
+            handleClickNext={() => setPageNumber(pageNumber + 1)}
+            handleClickPrevious={() => setPageNumber(pageNumber > 1 ? pageNumber - 1 : pageNumber)}
+          />
         </MovieContext.Provider>
       )}
     </main>

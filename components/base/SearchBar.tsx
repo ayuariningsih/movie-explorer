@@ -14,8 +14,6 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
   const [input, setInput] = useState('')
 
   async function onSearch() {
-    // if (input === '') return 
-
     const searchParams = {
       query: input.toLowerCase(),
     }

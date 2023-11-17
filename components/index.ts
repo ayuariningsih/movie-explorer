@@ -5,6 +5,8 @@ import DefaultList from "./DefaultList";
 import Card from "./base/Card";
 import SearchList from "./SearchList";
 import EmptyData from "./base/EmptyData";
+import Header from "./base/Header";
+import Pagination from "./Pagination";
 
 export {
   CustomButton,
@@ -13,5 +15,7 @@ export {
   DefaultList,
   SearchList,
   Card,
-  EmptyData
+  EmptyData,
+  Header,
+  Pagination
 }
