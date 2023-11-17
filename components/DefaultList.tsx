@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import { useRouter } from "next/navigation"
 import { Tab } from '@headlessui/react'
 import { Card } from '@/components'
-import { MoviesResult } from '@/types'
-import { MovieContext } from '@/app/page'
+import { MovieList, MoviesResult } from '@/types'
+import MovieContext  from '@/context/MovieContext'
 import { updateSearchParams } from '@/utils'
 
 function classNames(...classes: any[]) {
@@ -12,7 +12,7 @@ function classNames(...classes: any[]) {
 
 const List = () => {
   const router = useRouter()
-  const { allMovies } = useContext(MovieContext)
+  const { allMovies } = useContext<MovieList>(MovieContext)
   const [selectedIndex, setSelectedTabIndex] = useState(0)
 
   let categories = {

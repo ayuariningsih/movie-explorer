@@ -1,13 +1,13 @@
 "use client"
 
-import { CardProps } from '@/types'
+import { CardProps, MovieList } from '@/types'
 import { findGenresByIds, getLanguage, getYear } from '@/utils'
 import clsx from 'clsx'
-import { MovieContext } from '@/app/page'
+import MovieContext  from '@/context/MovieContext'
 import { useContext } from 'react'
 
 const Card = ({ movie }: CardProps) => {
-  const { languages, genres } = useContext(MovieContext)
+  const { languages, genres } = useContext<MovieList>(MovieContext)
   const setLanguage = () => {
     const data = getLanguage(movie.original_language, languages)
     

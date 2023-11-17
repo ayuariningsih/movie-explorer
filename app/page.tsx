@@ -7,13 +7,14 @@ import { fetchGenres, fetchMovies, fetchlanguages, searchMovies } from "@/utils"
 import { createContext, useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image'
+import MovieContext  from '@/context/MovieContext'
 
-export const MovieContext = createContext<MovieList>(
-  { 
-    languages: [], 
-    genres: [],
-    allMovies: []
-  })
+// export const MovieContext = createContext<MovieList>(
+//   { 
+//     languages: [], 
+//     genres: [],
+//     allMovies: []
+//   })
 
 export default function Home() {
   const initialMovies = [
@@ -37,7 +38,6 @@ export default function Home() {
 
   const searchParams = useSearchParams()
   const movieType = searchParams.get('movie_type') || ''
-  const query = searchParams.get('query') || ''
 
   const [loading, setLoading] = useState(true)
   const [languages, setLanguages] = useState([])
