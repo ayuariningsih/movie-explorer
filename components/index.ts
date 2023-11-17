@@ -4,6 +4,7 @@ import Loading from "./base/Loading";
 import DefaultList from "./DefaultList";
 import Card from "./base/Card";
 import SearchList from "./SearchList";
+import EmptyData from "./base/EmptyData";
 
 export {
   CustomButton,
@@ -11,5 +12,6 @@ export {
   Loading,
   DefaultList,
   SearchList,
-  Card
+  Card,
+  EmptyData
 }

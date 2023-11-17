@@ -48,7 +48,7 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
       <div className="flex flex-col max-w-md mx-auto">
         <div className="relative w-full">
           <input
-            className="block w-full px-4 py-2.5 text-sm font-semibold text-gray-900 border border-gray-400 rounded-full bg-gray-50 focus:outline-gray-400"
+            className="block w-full px-4 py-2.5 text-sm font-semibold text-light border border-inverse-50 rounded-full bg-inverse-50 focus:outline-gray-400"
             type="text"
             placeholder={placeholder}
             value={input}
@@ -58,7 +58,7 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
 
           { input && (
             <XCircleIcon
-              className="h-8 w-8 text-gray-300 hover:text-gray-400 absolute inset-y-1 right-0 flex items-center cursor-pointer pr-3 mr-6"
+              className="h-8 w-8 text-light bg-inverse-50 absolute inset-y-1 right-0 flex items-center cursor-pointer pr-3 mr-6"
               onClick={() => clear()}
             />
             )}

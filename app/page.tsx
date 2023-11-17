@@ -1,5 +1,6 @@
 "use client"
 
+import Link from 'next/link';
 import { DefaultList, Loading, SearchBar, SearchList } from "@/components";
 import { MovieList, MoviesResult, FetchTypes } from "@/types";
 import { fetchGenres, fetchMovies, fetchlanguages, searchMovies } from "@/utils";
@@ -95,30 +96,35 @@ export default function Home() {
     await getPopularMovies()
     await getTopRatedMovies()
     await getNowPlayingMovies()
-    await getAllLanguages()
     await getAllGenres()
+    await getAllLanguages()
     setLoading(false)
   }
 
   useEffect(() => {
-    init()
-  }, [])
+    if (!params.query)
+      init()
+  }, [params.query])
   
 
   return (
     <main className="overflow-hidden max-w-[1440px] px-8 py-5 mx-auto">
-      <h1 className="text-2xl font-extrabold py-5">Movie Explorer</h1>
+      <Link href="/" onClick={() => setParams({...params, query: ''})}>
+        <h1 className="text-2xl font-extrabold py-5">Movie Explorer</h1>
+      </Link>
       <SearchBar placeholder="Search" handleSearch={(val) => onSearch(val)} />
-      <MovieContext.Provider value={{ upcomingMovies, topRatedMovies, popularMovies, nowPlayingMovies, languages, genres }}>
-        { !loading && !params.query
-          ? ( <DefaultList /> )
-          : ( <SearchList movies={searchResults} /> )
-        }
+      
+      { loading 
+      ? (<Loading />)
+      : (
+        <MovieContext.Provider value={{ upcomingMovies, topRatedMovies, popularMovies, nowPlayingMovies, languages, genres }}>
+          { !params.query
+            ? ( <DefaultList /> )
+            : ( <SearchList movies={searchResults} searchParams={params} /> )
+          }
 
-        { loading && (
-          <Loading />
-        )}
-      </MovieContext.Provider>
+        </MovieContext.Provider>
+      )}
     </main>
   )
 }

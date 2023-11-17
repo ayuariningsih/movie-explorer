@@ -15,6 +15,11 @@ module.exports = {
       colors: {
         primary: "#0e6eff",
         "blue-100": "#0051cc",
+        "dark": "#0f1014",
+        "light": "#ffffff",
+        "inverse" : "#0f172a",
+        "inverse-50": "#334155",
+        "light-blue": "#38bdf8"
       },
     },
   },

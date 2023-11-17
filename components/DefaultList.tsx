@@ -27,11 +27,11 @@ const List = () => {
               key={category}
               className={({ selected }) =>
                 classNames(
-                  'w-full rounded-full py-2.5 text-md font-bold leading-5 text-purple-700',
-                  'ring-white/60 ring-offset-2 ring-offset-purple-700 focus:outline-none focus:ring-2',
+                  'w-full rounded-full py-2 text-md font-bold leading-5 text-light',
+                  'ring-white/60 ring-offset-2 ring-offset-light-blue focus:outline-none focus:ring-2',
                   selected
-                    ? 'text-white shadow bg-purple-700'
-                    : 'text-purple-500 hover:bg-purple-500/10 hover:text-purple-600'
+                    ? 'text-white shadow bg-light-blue'
+                    : 'text-light hover:bg-light-blue/50 hover:text-light-blue'
                 )
               }
             >
@@ -44,8 +44,7 @@ const List = () => {
             <Tab.Panel
               key={idx}
               className={classNames(
-                'rounded-xl bg-white p-3 grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4',
-                'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                'p-3 grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4',
               )}
             >
                 { movies.map((movie: MoviesResult) => (

@@ -1,17 +1,25 @@
-import { MoviesResult } from '@/types'
-import { Card } from '.'
-
+import { MoviesResult, Params } from '@/types'
+import { Card, EmptyData } from '.'
 export interface SearchListProps {
- movies: MoviesResult[]
+ movies: MoviesResult[],
+ searchParams: Params
 }
 
-const SearchList = ({ movies }: SearchListProps) => {
+const SearchList = ({ movies, searchParams }: SearchListProps) => {
+  const params = searchParams.query
+
   return (
-    <div className="rounded-xl bg-white p-3 grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 ring-white/60 ring-offset- focus:outline-none focus:ring-2">
-      { movies.map((movie: MoviesResult) => (
-        <Card movie={movie} key={movie.id} />
-      )) }
-    </div>
+    <>
+    { movies.length > 0
+    ? (<div className="p-3 mt-8 grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+        { movies.map((movie: MoviesResult) => (
+          <Card movie={movie} key={movie.id} />
+        )) }
+      </div>) 
+    : (
+       <EmptyData params={params} />
+      )}
+    </>
   )
 }
 
