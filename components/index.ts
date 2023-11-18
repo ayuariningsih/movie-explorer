@@ -1,12 +1,12 @@
-import CustomButton from "./base/CustomButton";
-import SearchBar from "./base/SearchBar";
-import Loading from "./base/Loading";
+import CustomButton from "./base/CustomButton/CustomButton";
+import SearchBar from "./base/SearchBar/SearchBar";
+import Loading from "./base/Loading/Loading";
 import DefaultList from "./DefaultList";
-import Card from "./base/Card";
+import Card from "./base/Card/Card";
 import SearchList from "./SearchList";
-import EmptyData from "./base/EmptyData";
-import Header from "./base/Header";
-import Pagination from "./Pagination";
+import EmptyData from "./base/EmptyData/EmptyData";
+import Header from "./base/Header/Header";
+import Pagination from "./Pagination/Pagination";
 
 export {
   CustomButton,

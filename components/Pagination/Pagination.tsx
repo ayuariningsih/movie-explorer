@@ -1,4 +1,4 @@
-import { CustomButton } from '.'
+import { CustomButton } from '..'
 import { PaginationProps } from '@/types'
 
 const Pagination = ({ pageNumber, totalPages, handleClickPrevious, handleClickNext }: PaginationProps) => {
