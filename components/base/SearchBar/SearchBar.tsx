@@ -52,22 +52,18 @@ const SearchBar = ({ placeholder, handleSearch }: SearchBarProps) => {
 
           { input && (
             <XCircleIcon
+              data-testid="clear-icon"
               className="h-8 w-8 text-light bg-inverse-50 absolute inset-y-1 right-0 flex items-center cursor-pointer pr-3 mr-6"
               onClick={() => clear()}
             />
             )}
 
           <MagnifyingGlassIcon
+            data-testid="search-icon"
             className="h-5 w-5 text-bold text-gray-400 bg-transparent hover:text-gray-400 absolute inset-y-2 right-2 flex items-center cursor-pointer"
             onClick={() => onSearch()}
           />
         </div>
-        
-        { params.get('name') && (
-          <div className="max-w-xl mx-auto text-xs text-gray-500 p-2">
-            <p>Showing users for "{params.get('name')}" </p>
-          </div>
-        )}
       </div>
     </>
 
